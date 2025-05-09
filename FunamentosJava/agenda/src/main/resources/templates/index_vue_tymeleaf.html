@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="webjars/petite-vue/0.4.1/dist/petite-vue.umd.js"></script>
+</head>
+<body>
+
+<div>
+    <h1>My todo list</h1>
+    <table v-scope><!-- the v-scope directive instructs where petite-vue enters -->
+        <thead>
+        <tr>
+            <th v-model="Titulo">Description</th>
+            <th></th>
+        </tr>
+        <tr>
+            <th colspan="2">
+                <input name="nombre" type="text" v-model="nombre"/>
+                <button @click="newTodo()">new</button>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- from server -->
+<!--        <tr v-if="!todos" th:each="t : ${todos}">-->
+<!--            <td th:text="${t.nombre}"></td>-->
+<!--            <td>-->
+<!--                <input type="hidden" name="id" th:value="${t.idContacto}"/>-->
+<!--                &lt;!&ndash;          <button th:@click="removeTodo(${t.id})">done</button>&ndash;&gt;-->
+<!--                &lt;!&ndash; original forms can be removed since reactive js will handle things &ndash;&gt;-->
+<!--            </td>-->
+<!--        </tr>-->
+        <!-- from hydration -->
+        <tr v-for="t in todos" :key="t.id">
+            <td>{{t.nombre}}</td>
+            <td>
+                <button @click="removeTodo(t.idContacto)">done</button>
+            </td>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <td  colspan="2">There are <span>{{message}}</span> tasks
+            </td>
+            <td v-else colspan="2">There are {{todos.length}} tasks</td>
+        </tr>
+        <tr>
+            <td  colspan="2">There are <span
+                    th:text="${message}"></span> tasks
+            </td>
+            <td v-else colspan="2">There are {{todos.length}} tasks</td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+
+<script th:inline="javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+
+      const baseOptions = {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        }
+      };
+
+      PetiteVue.createApp({
+        todos: [[${todos}]],
+        nombre: "",
+        message: [[${message}]],
+        Titulo: "Mi titulo",
+        async newTodo() {
+          /*await fetch("/save", {
+            ...baseOptions,
+            body: `nombre=${this.nombre}`,
+          });
+          this.nombre = "";*/
+          this.message = "Nuevo mensaje desde thymelef y VUE",
+          this.Titulo = "Mi nuevo Titulo";
+          //await this.listTodos();
+        },
+        async removeTodo(id) {
+          await fetch("/", {
+            ...baseOptions,
+            body: `id=${id}`
+          })
+          //await this.listTodos();
+        },
+        async listTodos() {
+          const result = await fetch("/list", {
+            ...baseOptions, method: "GET"
+          })
+          this.todos = await result.json();
+        }
+      }).mount();
+    });
+</script>
+</body>
+</html>

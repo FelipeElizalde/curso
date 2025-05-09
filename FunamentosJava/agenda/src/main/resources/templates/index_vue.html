@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="app">
+    <mi-contador></mi-contador>
+</div>
+
+<script th:src="@{/js/components/app.js}"></script>
+
+<!--<script>
+
+    const { createApp, ref } = Vue
+
+ createApp({
+   setup() {
+     const message = ref('Hello vue!')
+     return {
+       message
+     }
+   }
+ }).mount('#app')
+
+</script>-->
+
+</body>
+</html>
