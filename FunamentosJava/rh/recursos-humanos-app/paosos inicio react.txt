@@ -1,0 +1,26 @@
+//Dirigirse a la carpeta donde se va a crear el proyecto
+
+npx create-react-app .  //Crear el proyecto en la carpeta donde estamos
+npx create-react-app proyecto  //Crear el proyecto en la carpeta que seespecifica - proyecto
+
+npm start
+    Starts the development server.
+
+  npm run build
+    Bundles the app into static files for production.
+
+  npm test
+    Starts the test runner.
+
+  npm run eject
+    Removes this tool and copies build dependencies, configuration files
+    and scripts into the app directory. If you do this, you can’t go back!
+
+Local:            http://localhost:3000
+Proyecto en la red local:  http://192.168.0.113:3000
+
+
+-------- COMPONENTE BÁSICOS -----------
+ npm i axios
+npm i react-number-format
+npm i react-router-dom
