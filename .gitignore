@@ -16,3 +16,5 @@
 FUNDAMENTOS/tallerAlgoritmia.pdf
 *.pdf
 /.idea
+*.class
+*.xml
